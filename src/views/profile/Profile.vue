@@ -1,19 +1,20 @@
 <template>
-  <div class="home">
-    <Navbar/>
+  <v-container>
+    <div>Profile</div>
     <Footer/>
-  </div>
+  </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import Navbar from '../../components/share/Navbar'
 import Footer from '../../components/content/Footer'
 export default {
-  name: 'home',
+  name: 'Profile',
   components: {
-    Navbar,
     Footer
   }
 }
 </script>
+
+<style scoped>
+
+</style>
