@@ -4,6 +4,7 @@
     <Carousel :banner="banner"/>
     <Recommend :recommend = 'recommend'/>
     <week-trend/>
+    <Tagbar/>
     <Footer/>
   </div>
 </template>
@@ -16,6 +17,7 @@ import Footer from '../../components/content/Footer'
 import Carousel from './homeComponents/Carousel'
 import Recommend from './homeComponents/Recommend'
 import WeekTrend from './homeComponents/WeekTrend'
+import Tagbar from '../../components/content/Tagbar'
 
 // 引入网络请求
 import { getHomeData, getProductData } from '../../request/home'
@@ -27,7 +29,8 @@ export default {
     Footer,
     Carousel,
     Recommend,
-    WeekTrend
+    WeekTrend,
+    Tagbar
   },
   data () {
     return {
