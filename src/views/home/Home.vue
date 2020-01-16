@@ -4,8 +4,11 @@
     <Carousel :banner="banner"/>
     <Recommend :recommend = 'recommend'/>
     <week-trend/>
-    <Tagbar/>
+    <Tagbar @tagClick = 'tagPoint'/>
+<!--    <scroll-loader :loader-method="getProductData" :loader-disable="disable">-->
     <product-list :productData="productData[currentType].list"/>
+<!--    </scroll-loader>-->
+    <load-more @loadMore = 'loadMore'/>
     <Footer/>
   </div>
 </template>
@@ -20,6 +23,7 @@ import Recommend from './homeComponents/Recommend'
 import WeekTrend from './homeComponents/WeekTrend'
 import Tagbar from '../../components/content/Tagbar'
 import ProductList from '../../components/content/Product/ProductList'
+import LoadMore from '../../components/share/LoadMore'
 
 // 引入网络请求
 import { getHomeData, getProductData } from '../../request/home'
@@ -33,27 +37,42 @@ export default {
     Recommend,
     WeekTrend,
     Tagbar,
-    ProductList
+    ProductList,
+    LoadMore
   },
   data () {
     return {
       banner: [],
       recommend: [],
       productData: {
-        'pop': { page: 0, list: [] },
-        'new': { page: 0, list: [] },
-        'sell': { page: 0, list: [] }
+        'pop': { page: 0, list: [], pageSize: 20 },
+        'new': { page: 0, list: [], pageSize: 20 },
+        'sell': { page: 0, list: [], pageSize: 20 }
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      disable: false
     }
   },
   created () {
     this.getHomeData()
     this.getProductData('pop')
-    // this.getProductData('new')
-    // this.getProductData('sell')
+    this.getProductData('new')
+    this.getProductData('sell')
   },
   methods: {
+    tagPoint (index) {
+      if (index === 0) {
+        this.currentType = 'pop'
+      } else if (index === 1) {
+        this.currentType = 'new'
+      } else {
+        this.currentType = 'sell'
+      }
+      console.log(index)
+    },
+    loadMore () {
+      this.getProductData(this.currentType)
+    },
     getHomeData () {
       getHomeData().then(res => {
         // console.log(res)
@@ -62,10 +81,15 @@ export default {
       })
     },
     getProductData (type) {
-      getProductData(type, 1).then(res => {
+      const page = this.productData[type].page + 1
+      getProductData(type, page).then(res => {
         console.log(res)
+        // this.productData[type].page += 1
         const data = res.data
-        this.productData['pop'].list.push(...data.list)
+        this.productData[type].list.push(...data.list)
+        // this.disable = data.length < this.pageSize
+        // this.productData.page += 1
+        this.productData[type].page += 1
       })
     }
   }

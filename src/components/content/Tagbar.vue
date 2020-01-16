@@ -26,6 +26,7 @@ export default {
   methods: {
     tagClick (index) {
       this.currentIndex = index
+      this.$emit('tagClick', index)
     }
   }
 }
