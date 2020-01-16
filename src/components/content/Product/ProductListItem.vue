@@ -2,6 +2,7 @@
 <div>
   <v-card
     flat
+    @click="toProductDetails"
   >
     <v-img
       :src="goods.show.img"
@@ -29,6 +30,11 @@ export default {
       default () {
         return {}
       }
+    }
+  },
+  methods: {
+    toProductDetails () {
+      this.$router.push('/productDetails/' + this.goods.iid)
     }
   }
 }

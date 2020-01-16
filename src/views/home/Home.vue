@@ -5,10 +5,8 @@
     <Recommend :recommend = 'recommend'/>
     <week-trend/>
     <Tagbar @tagClick = 'tagPoint'/>
-<!--    <scroll-loader :loader-method="getProductData" :loader-disable="disable">-->
     <product-list :productData="productData[currentType].list"/>
-<!--    </scroll-loader>-->
-    <load-more @loadMore = 'loadMore'/>
+    <load-more v-show="showLoadMoreBtn" @loadMore = 'loadMore'/>
     <Footer/>
   </div>
 </template>
@@ -50,7 +48,7 @@ export default {
         'sell': { page: 0, list: [], pageSize: 20 }
       },
       currentType: 'pop',
-      disable: false
+      showLoadMoreBtn: false
     }
   },
   created () {
@@ -83,12 +81,10 @@ export default {
     getProductData (type) {
       const page = this.productData[type].page + 1
       getProductData(type, page).then(res => {
-        console.log(res)
-        // this.productData[type].page += 1
+        // console.log(res)
         const data = res.data
         this.productData[type].list.push(...data.list)
-        // this.disable = data.length < this.pageSize
-        // this.productData.page += 1
+        this.showLoadMoreBtn = true
         this.productData[type].page += 1
       })
     }
