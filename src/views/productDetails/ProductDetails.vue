@@ -54,7 +54,8 @@ export default {
       product.title = this.productDetails.title
       product.oldPrice = this.productDetails.oldPrice
       product.iid = this.iid
-      this.$store.commit('addCart', product)
+      // this.$store.commit('addCart', product)
+      this.$store.dispatch('addCart', product)
     }
   }
 }

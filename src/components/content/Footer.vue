@@ -21,7 +21,6 @@
               v-on="on"
             >
               <v-icon size='24px' class="btnActive">{{item.icon}}</v-icon>
-              <!--                <span>{{item.tooltip}}</span>-->
             </v-btn>
           </template>
           <span>{{item.tooltip}}</span>
